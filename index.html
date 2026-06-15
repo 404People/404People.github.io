@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>欢迎页面</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      color: #fff;
+    }
+
+    .card {
+      text-align: center;
+      padding: 60px 80px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      max-width: 520px;
+      width: 90%;
+    }
+
+    .icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #e96c76, #f7b731);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 36px;
+      background: linear-gradient(90deg, #e96c76, #f7b731);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(233, 108, 118, 0.45);
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="icon">🚀</span>
+    <h1>你好，欢迎来到这里</h1>
+    <p>这是一个简单的示例页面。<br/>点击下方按钮体验交互效果。</p>
+    <button class="btn" onclick="this.textContent='✅ 已点击！'">点击我</button>
+    <div class="footer">index.html · 由 WorkBuddy 生成</div>
+  </div>
+</body>
+</html>
