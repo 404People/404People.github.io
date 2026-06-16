@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目详情 | 苏双燕作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:        #FDFAF5;
+      --white:        #FFFFFF;
+      --text:         #2D2D2D;
+      --text-light:   #6B7280;
+      --text-lighter: #9CA3AF;
+      --accent:       #A8D5E8;
+      --accent-dark:  #7BB8D4;
+      --accent-light: #D4EBF5;
+      --border:       #E8E4DF;
+      --shadow-sm:    0 1px 3px rgba(0,0,0,0.06);
+      --radius:       8px;
+      --transition:   0.3s ease;
+      --font-sans:    'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text);
+      background: var(--cream);
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--accent); color: var(--text); }
+
+    /* ── Top bar (mobile only) ── */
+    .top-bar {
+      display: none;
+      position: sticky;
+      top: 0; z-index: 100;
+      background: rgba(253,250,245,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom:1px solid var(--border);
+      padding: 0 1.5rem;
+      height: 52px;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color var(--transition);
+      font-weight: 400;
+    }
+    .back-link:hover { color: var(--accent-dark); }
+    .back-link svg { width: 16px; height: 16px; }
+
+    /* ── Gallery — 60% width, centered, proportional height ── */
+    .gallery {
+      width: 60%;
+      margin: 0 auto;
+      padding: 1.5rem 0 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .media-item {
+      width: 100%;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .media-inner {
+      display: block;
+      width: 100%;
+    }
+    .media-inner img,
+    .media-inner video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    /* placeholder — 统一 4:3 宽高比，宽度一致、高度等比 */
+    .media-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, var(--accent-light), rgba(168,213,232,0.2));
+      position: relative;
+      overflow: hidden;
+      color: var(--accent-dark);
+      aspect-ratio: 4/3;
+    }
+    .media-placeholder.video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.08);
+    }
+    .media-placeholder-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      position: relative;
+      z-index: 1;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .media-placeholder-inner svg { width: 32px; height: 32px; opacity: 0.45; }
+    .media-placeholder-inner span {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      max-width: 220px;
+      line-height: 1.4;
+    }
+    .media-placeholder-inner .play-badge {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+    .media-placeholder-inner .play-badge svg { width: 18px; height: 18px; opacity: 0.8; color: var(--text); }
+
+    /* ── Project header (above gallery) ── */
+    .project-header {
+      width: 60%;
+      margin: 2rem auto 0;
+      padding: 2rem 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-header h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .project-header .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--accent-dark);
+      background: var(--accent-light);
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+    }
+    .project-header p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      max-width: 42rem;
+    }
+    .not-found {
+      text-align: center;
+      padding: 8rem 2rem;
+      color: var(--text-light);
+    }
+    .not-found a {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.6rem 2rem;
+      border: 1.5px solid var(--accent-dark);
+      border-radius: 30px;
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+    .not-found a:hover { background: var(--accent-dark); color: var(--white); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .top-bar { display: flex; }
+      .project-header { width: 100%; margin: 1rem auto 0; padding: 1.25rem 1rem 1rem; }
+      .project-header h1 { font-size: 1.35rem; }
+      .project-header p { font-size: 0.88rem; }
+      .gallery { width: 100%; padding: 1rem 1rem 2rem; }
+    }
+    @media (max-width: 560px) {
+      .project-header { padding: 1rem 0.75rem 0.75rem; }
+      .project-header h1 { font-size: 1.15rem; }
+      .gallery { padding: 0.75rem 0.5rem 1.5rem; }
+      .top-bar { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="javascript:history.back()" class="back-link" title="返回上一页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      返回上一页
+    </a>
+  </div>
+
+  <div id="app">
+    <div class="not-found"><p>加载中…</p></div>
+  </div>
+
+  <script>
+  var portfolioData = [
+    {
+      slug: 'yuedu-app',
+      title: '悦读 — 电子阅读 App 重设计',
+      tag: 'Mobile App',
+      desc: '为千万级用户的阅读产品进行全面的体验升级与视觉焕新，重新定义阅读器的排版引擎参数与动态主题方案。',
+      media: [
+        { type: 'image', h: 320, placeholder: 'App 首页设计稿' },
+        { type: 'image', h: 440, placeholder: '阅读器界面 — 日间模式' },
+        { type: 'image', h: 280, placeholder: '阅读器界面 — 夜间模式' },
+        { type: 'image', h: 360, placeholder: '设计语言系统 — 色彩 & 字体规范' },
+        { type: 'image', h: 400, placeholder: '组件库概览 — 200+ 组件' },
+        { type: 'video', h: 380, placeholder: '交互动效 — 夜间模式平滑切换演示视频' }
+      ]
+    },
+    {
+      slug: 'yunce-saas',
+      title: '云策 — SaaS 数据平台控制台',
+      tag: 'Web Design',
+      desc: '面向金融机构的智能投研 SaaS 平台，将海量复杂数据以直观、可操作的方式呈现，支持模块化仪表盘与多主题一键切换。',
+      media: [
+        { type: 'image', h: 300, placeholder: '仪表盘首页 — 数据看板总览' },
+        { type: 'image', h: 420, placeholder: '模块化拖拽组合数据卡片' },
+        { type: 'image', h: 260, placeholder: '4 种主题切换效果对比（浅色/深色/高对比度/品牌定制）' },
+        { type: 'video', h: 380, placeholder: '交互原型演示 — 拖拽操作流程' },
+        { type: 'image', h: 340, placeholder: '渐进式信息架构示意图' }
+      ]
+    },
+    {
+      slug: 'huajianji-brand',
+      title: '花间集 — 新消费品牌全案设计',
+      tag: 'Branding',
+      desc: '从 0 到 1 的新消费品牌全案设计，涵盖品牌策略、视觉识别、包装系统到小程序商城的全渠道落地。',
+      media: [
+        { type: 'image', h: 360, placeholder: '品牌 Logo — 手绘水彩花卉 + 中文字标' },
+        { type: 'image', h: 300, placeholder: '品牌视觉识别系统手册' },
+        { type: 'image', h: 400, placeholder: '包装设计 — 环保材质撕拉式开箱体验' },
+        { type: 'image', h: 320, placeholder: '小程序商城 — 「花语故事」选购流程' },
+        { type: 'image', h: 380, placeholder: '品牌官网首页设计' }
+      ]
+    },
+    {
+      slug: 'prism-ds',
+      title: 'Prism — 企业级设计系统',
+      tag: 'Design System',
+      desc: '服务于 3 条产品线、覆盖 Web/iOS/Android 三端的企业级设计系统，包含 500+ Design Token 与 80+ 组件的完整规范体系。',
+      media: [
+        { type: 'image', h: 340, placeholder: 'Design Token 体系 — 500+ 语义化变量' },
+        { type: 'image', h: 420, placeholder: '组件库全景 — 60+ 基础组件 + 20+ 复合组件' },
+        { type: 'image', h: 280, placeholder: 'Storybook 文档站点' },
+        { type: 'image', h: 380, placeholder: 'Figma 插件 — 设计稿到代码零沟通交付' },
+        { type: 'image', h: 300, placeholder: '跨平台适配 — Web / iOS / Android 三端' }
+      ]
+    },
+    {
+      slug: 'shiguang-mp',
+      title: '食光 — 餐饮数字菜单小程序',
+      tag: 'Mini Program',
+      desc: '为连锁茶饮品牌打造的数字菜单小程序，大卡片布局突出产品视觉，下单流程精简至 3 步，平均操作时长降低 60%。',
+      media: [
+        { type: 'image', h: 400, placeholder: '小程序首页 — 大卡片菜单布局' },
+        { type: 'image', h: 320, placeholder: '横向滑动交互 — 「翻阅菜单」体验' },
+        { type: 'image', h: 360, placeholder: '会员中心 — 进度环 & 成就徽章' },
+        { type: 'image', h: 280, placeholder: '精简下单流程 — 3 步完成' }
+      ]
+    },
+    {
+      slug: 'flow-prototypes',
+      title: 'Flow — 交互原型合集',
+      tag: 'Interaction',
+      desc: '收录 30+ 个独立微交互原型的交互实验项目，涵盖手势操作、页面转场与动效参数参考，可作为日常设计工作的动效参考库。',
+      media: [
+        { type: 'video', h: 340, placeholder: '手势操作 — 滑动 / 捏合 / 长按' },
+        { type: 'video', h: 360, placeholder: '页面转场动画合集' },
+        { type: 'video', h: 300, placeholder: '加载动画 — 品牌化 Loading' },
+        { type: 'video', h: 380, placeholder: '反馈动效 — 按钮 / 表单 / 通知' },
+        { type: 'image', h: 320, placeholder: '缓动曲线 & 技术参数参考表' },
+        { type: 'image', h: 280, placeholder: 'Dribbble 15 万+ 浏览量截图' }
+      ]
+    }
+  ];
+
+  var params  = new URLSearchParams(window.location.search);
+  var slug    = params.get('id');
+  var project = null;
+
+  for (var i = 0; i < portfolioData.length; i++) {
+    if (portfolioData[i].slug === slug) { project = portfolioData[i]; break; }
+  }
+
+  var app = document.getElementById('app');
+
+  if (!project) {
+    document.title = '项目未找到';
+    app.innerHTML =
+      '<div class="not-found">' +
+        '<p style="font-size:1.25rem;margin-bottom:0.5rem;">项目未找到</p>' +
+        '<p style="margin-bottom:1rem;">抱歉，没有找到对应的项目。可能链接已失效。</p>' +
+        '<a href="javascript:history.back()">返回上一页</a>' +
+      '</div>';
+  } else {
+    document.title = project.title + ' | 苏双燕作品集';
+
+    var html = '<div class="project-header"><h1>' + project.title + '</h1><span class="tag">' + project.tag + '</span></div><div class="gallery">';
+    project.media.forEach(function(m) {
+      var isVideo = m.type === 'video';
+
+      html += '<div class="media-item">';
+
+      if (m.src) {
+        /* real media — width:100%, height:auto → proportional scaling */
+        if (isVideo) {
+          html += '<video class="media-inner" controls playsinline src="' + m.src + '"></video>';
+        } else {
+          html += '<img class="media-inner" src="' + m.src + '" alt="' + (m.desc || m.placeholder) + '" loading="lazy">';
+        }
+      } else {
+        /* placeholder — use a consistent 4:3 aspect ratio for uniform look */
+        var aspectClass = isVideo ? ' video' : '';
+        html +=
+          '<div class="media-placeholder' + aspectClass + '">' +
+            '<div class="media-placeholder-inner">' +
+              (isVideo
+                ? '<div class="play-badge"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21"/></svg></div>'
+                : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>') +
+              '<span>' + m.placeholder + '</span>' +
+            '</div>' +
+          '</div>';
+      }
+
+      html += '</div>';
+    });
+    html += '</div>';
+
+    app.innerHTML = html;
+  }
+  </script>
+</body>
+</html>
